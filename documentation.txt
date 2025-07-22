@@ -1,5 +1,3 @@
-I want to run a small hackathon focused on AG Grid and AG Charts visualization libraries, where all internal configurations, components, and library features are persisted, and user-configurable features are saved in a backend database, here’s a complete plan and example implementation. The hackathon will challenge participants to build a customizable dashboard, and I’ll provide a starter template to help you get started.
-
 Hackathon Plan
 Challenge: Build a Customizable Dashboard with AG Grid and AG Charts
 Objective:
@@ -16,14 +14,14 @@ Suggested Tools:
 
 Frontend: AG Grid, AG Charts, and  plain JavaScript.
 Backend: Node.js with Express and a simple database (e.g., JSON file or SQLite).
-Resources: AG Grid Docs, AG Charts Docs.
+Resces: AG Grid Docs, AG Charts Docs.
 Evaluation:
 
 Functionality: Does it meet all requirements?
 Usability: Is the interface intuitive?
 Code Quality: Is it clean and maintainable?
 Starter Template
-Below is a basic implementation using React, AG Grid, AG Charts, and a Node.js backend to demonstrate the concept. This can serve as a starting point for your hackathon participants.
+
 
 index.html
 html
@@ -46,4 +44,4 @@ Customize:
 Filter the grid or change the chart type using the buttons.
 Click "Save State" to persist changes.
 Reload: Refresh the page to see the state restored.
-This template demonstrates persisting grid filters and chart configurations, fulfilling your hackathon’s goals. Participants can expand it by adding more features like column resizing, custom renderers, or a more robust database (e.g., SQLite).
+This template demonstrates persisting grid filters and chart configurations, fulfilling  hackathon’s goals. Participants can expand it by adding more features like column resizing, custom renderers, or a more robust database (e.g., SQLite).
