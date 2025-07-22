@@ -1,0 +1,207 @@
+{
+  "gridState": {
+    "columns": [
+      {
+        "colId": "price",
+        "width": 200,
+        "hide": false,
+        "pinned": null,
+        "sort": null,
+        "sortIndex": null,
+        "aggFunc": null,
+        "rowGroup": false,
+        "rowGroupIndex": null,
+        "pivot": false,
+        "pivotIndex": null,
+        "flex": null
+      },
+      {
+        "colId": "model",
+        "width": 200,
+        "hide": false,
+        "pinned": null,
+        "sort": "asc",
+        "sortIndex": 0,
+        "aggFunc": null,
+        "rowGroup": false,
+        "rowGroupIndex": null,
+        "pivot": false,
+        "pivotIndex": null,
+        "flex": null
+      },
+      {
+        "colId": "make",
+        "width": 200,
+        "hide": false,
+        "pinned": null,
+        "sort": null,
+        "sortIndex": null,
+        "aggFunc": null,
+        "rowGroup": false,
+        "rowGroupIndex": null,
+        "pivot": false,
+        "pivotIndex": null,
+        "flex": null
+      }
+    ],
+    "filter": {
+      "make": {
+        "filterType": "text",
+        "type": "equals",
+        "filter": "Toyota"
+      }
+    }
+  },
+  "chartState": {
+    "container": {},
+    "data": [
+      {
+        "make": "Toyota",
+        "model": "Celica",
+        "price": 35000
+      },
+      {
+        "make": "Ford",
+        "model": "Mondeo",
+        "price": 32000
+      },
+      {
+        "make": "Porsche",
+        "model": "Boxster",
+        "price": 72000
+      }
+    ],
+    "series": [
+      {
+        "type": "bar",
+        "xKey": "make",
+        "yKey": "price",
+        "fill": "#8e90d7"
+      }
+    ],
+    "axes": [
+      {
+        "type": "category",
+        "position": "bottom"
+      },
+      {
+        "type": "number",
+        "position": "left"
+      }
+    ],
+    "title": {
+      "text": "Kirill's cars!"
+    },
+    "background": {
+      "fill": "#fafafa"
+    }
+  },
+  "clickHistory": [
+    "Script start",
+    "DOM content loaded",
+    "Grid is ready",
+    "Creating chart...",
+    "Getting chart options",
+    "Chart created successfully!",
+    "Loading state from backend...",
+    "Loaded state from server",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Reset Filter button clicked",
+    "Reset Filter button clicked",
+    "Change Chart to pie button clicked",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Change Chart to bar button clicked",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Grid filter changed",
+    "Updating chart data...",
+    "Chart data updated.",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Grid filter changed",
+    "Updating chart data...",
+    "Chart data updated.",
+    "Grid filter changed",
+    "Updating chart data...",
+    "Chart data updated.",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Change Chart to pie button clicked",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Change Chart to bar button clicked",
+    "Applied chart customizations",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "saveState button clicked",
+    "Saving state to backend...",
+    "Reset Filter button clicked",
+    "Grid filter changed",
+    "Updating chart data...",
+    "Chart data updated.",
+    "saveState button clicked",
+    "Saving state to backend..."
+  ],
+  "chartCustomizations": {
+    "title": "Kirill's cars!",
+    "backgroundColor": "#fafafa",
+    "seriesColor": "#8e90d7"
+  }
+}

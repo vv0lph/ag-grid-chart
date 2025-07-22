@@ -1,0 +1,13 @@
+{
+  "name": "ag-grid-hackathon-starter",
+  "version": "1.0.0",
+  "description": "Starter template for AG Grid and AG Charts hackathon",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

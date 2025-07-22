@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG Grid Hackathon</title>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-charts-community@11.1.0/dist/umd/ag-charts-community.min.js"></script>
+    <style>
+        body { font-family: sans-serif; }
+        #log-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
+        #log-list li { padding: 2px 0; }
+    </style>
+</head>
+<body>
+    <h1>Make Kirill Happy Again!!!! <img src="https://kirillizmikov.com/wp-content/uploads/2020/04/cropped-2019-10-26-14.22.52-scaled-1.jpg" alt="AG Grid Logo" style="height: 60px; vertical-align: middle;"></h1>
+    <div id="myGrid" style="height: 400px; width: 800px;" class="ag-theme-alpine"></div>
+    <div id="myChart" style="height: 400px; width: 800px;"></div>
+    <div id="customization-controls">
+        <h3>Chart Customization</h3>
+        <label for="chart-title">Title:</label>
+        <input type="text" id="chart-title" oninput="applyChartCustomizations()">
+        <label for="background-color">Background Color:</label>
+        <input type="color" id="background-color" value="#ffffff" oninput="applyChartCustomizations()">
+        <label for="series-color">Series Color:</label>
+        <input type="color" id="series-color" value="#8884d8" oninput="applyChartCustomizations()">
+    </div>
+    <button onclick="filterData()">Filter to Toyota</button>
+    <button onclick="changeChartType('pie')">Change Chart to Pie</button>
+    <button onclick="changeChartType('bar')">Change Chart to Bar</button>
+    <button onclick="resetFilter()">Reset Filter</button>
+    <button onclick="saveState()">Save State</button>
+    <div id="log-container">
+        <h2>Logs</h2>
+        <ul id="log-list"></ul>
+    </div>
+
+    <script>
+        let gridApi;
+        let chart;
+        let clickHistory = [];
+
+        function logMessage(message, data) {
+            const logString = data ? `${message} ${JSON.stringify(data)}` : message;
+            console.log(message, data || '');
+            clickHistory.push(logString);
+            const logList = document.getElementById('log-list');
+            const newLogEntry = document.createElement('li');
+            newLogEntry.textContent = logString;
+            logList.appendChild(newLogEntry);
+            logList.scrollTop = logList.scrollHeight; // Auto-scroll to bottom
+        }
+
+        logMessage('Script start');
+
+        const gridOptions = {
+            rowData: [
+                { make: "Toyota", model: "Celica", price: 35000 },
+                { make: "Ford", model: "Mondeo", price: 32000 },
+                { make: "Porsche", model: "Boxster", price: 72000 }
+            ],
+            columnDefs: [
+                { field: "make", filter: true },
+                { field: "model" },
+                { field: "price" }
+            ],
+            onGridReady: (params) => {
+                logMessage('Grid is ready');
+                gridApi = params.api;
+                try {
+                    logMessage('Creating chart...');
+                    chart = agCharts.AgCharts.create(getChartOptions());
+                    logMessage('Chart created successfully!');
+                } catch (e) {
+                    logMessage('Error creating chart: ' + e.message);
+                    console.error(e);
+                }
+                loadState();
+            },
+            onFilterChanged: () => {
+                logMessage('Grid filter changed');
+                if (chart) {
+                    updateChart();
+                }
+            }
+        };
+
+        function getChartOptions() {
+            const options = {
+                container: document.getElementById('myChart'),
+                data: getGridData(),
+                series: [{
+                    type: 'bar',
+                    xKey: 'make',
+                    yKey: 'price'
+                }]
+            };
+            logMessage('Getting chart options');
+            return options;
+        }
+        
+        function getGridData() {
+            const rowData = [];
+            console.assert(gridApi, "gridApi is not defined in getGridData");
+            if (gridApi) {
+                gridApi.forEachNode(node => rowData.push(node.data));
+            }
+            return rowData;
+        }
+
+        function getFilteredGridData() {
+            const rowData = [];
+            console.assert(gridApi, "gridApi is not defined in getFilteredGridData");
+            if (gridApi) {
+                gridApi.forEachNodeAfterFilter(node => rowData.push(node.data));
+            }
+            return rowData;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            logMessage('DOM content loaded');
+            const gridDiv = document.querySelector('#myGrid');
+            agGrid.createGrid(gridDiv, gridOptions);
+        });
+
+        function saveState() {
+            logMessage('saveState button clicked');
+            if (!gridApi || !chart) {
+                logMessage('Error: Grid or chart not ready for saving state');
+                return;
+            }
+
+            const gridState = {
+                columns: gridApi.getColumnState(),
+                filter: gridApi.getFilterModel()
+            };
+            const chartState = chart.getOptions();
+            const chartCustomizations = {
+                title: document.getElementById('chart-title').value,
+                backgroundColor: document.getElementById('background-color').value,
+                seriesColor: document.getElementById('series-color').value
+            };
+            
+            logMessage('Saving state to backend...');
+            fetch('http://localhost:3000/api/state', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ gridState, chartState, clickHistory, chartCustomizations })
+            }).then(() => alert('State saved!'));
+        }
+
+        function loadState() {
+            logMessage('Loading state from backend...');
+            if (!gridApi) {
+                logMessage('Error: Grid not ready for loading state');
+                return;
+            }
+
+            fetch('http://localhost:3000/api/state')
+                .then(response => response.json())
+                .then(data => {
+                    logMessage('Loaded state from server');
+                    if (data.gridState) {
+                        if(data.gridState.columns) {
+                            gridApi.applyColumnState({ state: data.gridState.columns, applyOrder: true });
+                        }
+                        if(data.gridState.filter) {
+                            gridApi.setFilterModel(data.gridState.filter);
+                        }
+                    }
+                    if (chart && data.chartState) {
+                        const updatedChartOptions = {
+                            ...data.chartState,
+                            data: getFilteredGridData()
+                        };
+                        //agcharts.update(chart, updatedChartOptions);
+                        chart.update(updatedChartOptions);
+                    }
+                    if (data.chartCustomizations) {
+                        document.getElementById('chart-title').value = data.chartCustomizations.title;
+                        document.getElementById('background-color').value = data.chartCustomizations.backgroundColor;
+                        document.getElementById('series-color').value = data.chartCustomizations.seriesColor;
+                        applyChartCustomizations();
+                    }
+                    if (data.clickHistory) {
+                        clickHistory = data.clickHistory;
+                        const logList = document.getElementById('log-list');
+                        logList.innerHTML = ''; // Clear old logs
+                        clickHistory.forEach(msg => {
+                            const newLogEntry = document.createElement('li');
+                            newLogEntry.textContent = msg;
+                            logList.appendChild(newLogEntry);
+                        });
+                    }
+                });
+        }
+
+        function filterData() {
+            logMessage('Filter to Toyota button clicked');
+            console.assert(gridApi, "gridApi is not defined in filterData");
+            if (!gridApi) return;
+            gridApi.setFilterModel({
+                make: { type: 'set', values: ['Toyota'] }
+            });
+        }
+        
+        function resetFilter() {
+            logMessage('Reset Filter button clicked');
+            console.assert(gridApi, "gridApi is not defined in resetFilter");
+            if (!gridApi) return;
+            gridApi.setFilterModel(null);
+        }
+
+        function changeChartType(type) {
+            logMessage(`Change Chart to ${type} button clicked`);
+            console.assert(chart, "chart is not defined in changeChartType");
+            if (!chart) return;
+
+            const data = getFilteredGridData();
+            let series;
+            let axes;
+
+            if (type === 'pie') {
+                series = [{
+                    type: 'pie',
+                    angleKey: 'price',
+                    legendItemKey: 'make'
+                }];
+                axes = undefined; // Pie charts don't have axes
+            } else { // default to bar
+                series = [{
+                    type: 'bar',
+                    xKey: 'make',
+                    yKey: 'price'
+                }];
+                axes = [ // Bar charts need axes
+                    { type: 'category', position: 'bottom' },
+                    { type: 'number', position: 'left' }
+                ];
+            }
+
+            const newOptions = {
+                container: document.getElementById('myChart'), // container is required
+                data: data,
+                series: series,
+                axes: axes
+            };
+            chart.update(newOptions);
+            applyChartCustomizations(); // Re-apply customizations after type change
+        }
+
+        function updateChart() {
+            logMessage('Updating chart data...');
+            console.assert(chart, "chart is not defined in updateChart");
+            if (!chart) return;
+            chart.data = getFilteredGridData();
+            logMessage('Chart data updated.');
+        }
+
+        function applyChartCustomizations() {
+            console.assert(chart, "chart is not defined in applyChartCustomizations");
+            if (!chart) return;
+
+            const title = document.getElementById('chart-title').value;
+            const backgroundColor = document.getElementById('background-color').value;
+            const seriesColor = document.getElementById('series-color').value;
+
+            const currentOptions = chart.getOptions();
+            const seriesType = currentOptions.series[0].type;
+
+            let updatedSeries;
+            if (seriesType === 'pie') {
+                updatedSeries = [{ ...currentOptions.series[0], fills: [seriesColor] }];
+            } else { // for bar chart
+                updatedSeries = [{ ...currentOptions.series[0], fill: seriesColor }];
+            }
+
+            const newOptions = {
+                ...currentOptions,
+                title: { text: title },
+                background: { fill: backgroundColor },
+                series: updatedSeries
+            };
+
+            chart.update(newOptions);
+            logMessage('Applied chart customizations');
+        }
+    </script>
+</body>
+</html>

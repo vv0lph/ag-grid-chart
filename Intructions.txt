@@ -1,0 +1,49 @@
+I want to run a small hackathon focused on AG Grid and AG Charts visualization libraries, where all internal configurations, components, and library features are persisted, and user-configurable features are saved in a backend database, here’s a complete plan and example implementation. The hackathon will challenge participants to build a customizable dashboard, and I’ll provide a starter template to help you get started.
+
+Hackathon Plan
+Challenge: Build a Customizable Dashboard with AG Grid and AG Charts
+Objective:
+
+Develop a web application that integrates AG Grid and AG Charts, allowing users to configure and customize the grid and chart, with all states persisted in a simple backend database.
+
+Requirements:
+
+Configuration: Users can customize the grid (e.g., columns, sorting, filtering) and chart (e.g., type, series, axes).
+Persistence: Save the grid and chart states in a backend database and restore them on reload.
+Integration: Use AG Grid’s data to generate AG Charts visualizations.
+Database: Use a lightweight backend (e.g., Node.js with JSON or SQLite).
+Suggested Tools:
+
+Frontend: AG Grid, AG Charts, and  plain JavaScript.
+Backend: Node.js with Express and a simple database (e.g., JSON file or SQLite).
+Resources: AG Grid Docs, AG Charts Docs.
+Evaluation:
+
+Functionality: Does it meet all requirements?
+Usability: Is the interface intuitive?
+Code Quality: Is it clean and maintainable?
+Starter Template
+Below is a basic implementation using React, AG Grid, AG Charts, and a Node.js backend to demonstrate the concept. This can serve as a starting point for your hackathon participants.
+
+index.html
+html
+Edit in files
+•
+Show inline
+Backend (Node.js)
+Here’s a simple backend to pair with the frontend. Save this as server.js and run it with node server.js after installing dependencies (npm install express).
+
+server.js
+javascript
+Edit in files
+•
+Show inline
+How to Use
+Setup:
+Run the backend (node server.js) after installing Node.js and Express.
+Open the HTML file in a browser (ensure CORS allows localhost:3000 or serve it via a local server).
+Customize:
+Filter the grid or change the chart type using the buttons.
+Click "Save State" to persist changes.
+Reload: Refresh the page to see the state restored.
+This template demonstrates persisting grid filters and chart configurations, fulfilling your hackathon’s goals. Participants can expand it by adding more features like column resizing, custom renderers, or a more robust database (e.g., SQLite).
