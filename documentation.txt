@@ -6,42 +6,12 @@ Develop a web application that integrates AG Grid and AG Charts, allowing users 
 
 Requirements:
 
-Configuration: Users can customize the grid (e.g., columns, sorting, filtering) and chart (e.g., type, series, axes).
+Configuration: Customize the grid (e.g., columns, sorting, filtering) and chart (e.g., type, series, axes).
 Persistence: Save the grid and chart states in a backend database and restore them on reload.
-Integration: Use AG Grid’s data to generate AG Charts visualizations.
-Database: Use a lightweight backend (e.g., Node.js with JSON or SQLite).
+Integration: AG Grid’s data to generate AG Charts visualizations.
+Database: Lightweight backend (e.g., Node.js with JSON or SQLite).
 Suggested Tools:
 
 Frontend: AG Grid, AG Charts, and  plain JavaScript.
 Backend: Node.js with Express and a simple database (e.g., JSON file or SQLite).
-Resces: AG Grid Docs, AG Charts Docs.
-Evaluation:
-
-Functionality: Does it meet all requirements?
-Usability: Is the interface intuitive?
-Code Quality: Is it clean and maintainable?
-Starter Template
-
-
-index.html
-html
-Edit in files
-•
-Show inline
-Backend (Node.js)
-Here’s a simple backend to pair with the frontend. Save this as server.js and run it with node server.js after installing dependencies (npm install express).
-
-server.js
-javascript
-Edit in files
-•
-Show inline
-How to Use
-Setup:
-Run the backend (node server.js) after installing Node.js and Express.
-Open the HTML file in a browser (ensure CORS allows localhost:3000 or serve it via a local server).
-Customize:
-Filter the grid or change the chart type using the buttons.
-Click "Save State" to persist changes.
-Reload: Refresh the page to see the state restored.
-This template demonstrates persisting grid filters and chart configurations, fulfilling  hackathon’s goals. Participants can expand it by adding more features like column resizing, custom renderers, or a more robust database (e.g., SQLite).
+Library: AG Grid Docs, AG Charts Docs.
